@@ -25,7 +25,7 @@ trained_std = std2(train_sum_im_t);
 
 %% Processing the crack image
 % load('/Users/davidluisdiasfernandes/Documents/MATLAB/Samples/Cidade Universitária/Estrada1/Imagem2/100cm__Decoded.mat');
-load('C:\Users\david\Desktop\Samples\Images\Cidade Universitária\Estrada1\Imagem3\100cm__Decoded.mat');
+load('C:\Users\david\Desktop\Samples\Images\Cidade Universitária\Estrada1\Imagem2\100cm__Decoded.mat');
 [sat_central_im, sum_im_v, sum_im_h, sum_im_t] = sumAllApertures( LF , thresh_level );
 central_im  = getCentralAperture( LF );
 final_im = sum_im_v + sum_im_h;
@@ -47,6 +47,19 @@ final_im = sum_im_v + sum_im_h;
 figure;
 imshow(final_im)
 title('SUM total')
+
+%% Histogram
+equalizada=histeq(final_im);
+subplot(2,2,1);
+imshow(final_im);
+title('Imagem Original');
+subplot(2,2,2);
+imshow(equalizada);
+title('Imagem Equalizada');
+subplot(2,2,3);
+imhist(final_im);
+subplot(2,2,4);
+imhist(equalizada); 
 
 %% Block Detect
 num_of_blocks = 50;
