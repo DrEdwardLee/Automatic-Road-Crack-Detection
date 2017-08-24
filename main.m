@@ -25,7 +25,7 @@ trained_std = std2(train_sum_im_t);
 
 %% Processing the crack image
 % load('/Users/davidluisdiasfernandes/Documents/MATLAB/Samples/Cidade Universitária/Estrada1/Imagem2/100cm__Decoded.mat');
-load('C:\Users\david\Desktop\Samples\Images\Cidade Universitária\Estrada1\Imagem2\100cm__Decoded.mat');
+load('C:\Users\david\Desktop\Samples\Images\Cidade Universitária\Estrada1\Imagem1\100cm__Decoded.mat');
 [sat_central_im, sum_im_v, sum_im_h, sum_im_t] = sumAllApertures( LF , thresh_level );
 central_im  = getCentralAperture( LF );
 final_im = sum_im_v + sum_im_h;
@@ -43,12 +43,13 @@ figure;
 imshow(sum_im_h);
 title('SUM Horizontal');
 %% Plot final image
-final_im = sum_im_v + sum_im_h;
 figure;
 imshow(final_im)
 title('SUM total')
 
 %% Histogram
+final_im = sum_im_v + sum_im_h;
+figure;
 equalizada=histeq(final_im);
 subplot(2,2,1);
 imshow(final_im);
@@ -61,6 +62,7 @@ imhist(final_im);
 subplot(2,2,4);
 imhist(equalizada); 
 
+final_im = equalizada;
 %% Block Detect
 num_of_blocks = 50;
 [ res1, mean_std_crack_block1, mean_mean_crack_block1, mean_std_no_crack_block1, mean_mean_no_crack_block1 ] = ...
@@ -68,12 +70,6 @@ num_of_blocks = 50;
 
 [ res2, mean_std_crack_block2, mean_mean_crack_block2, mean_std_no_crack_block2, mean_mean_no_crack_block2 ] = ...
     block_detectV2( final_im, num_of_blocks, trained_mean, 5);
-
-% figure;
-% imshowpair(res1,res2, 'montage');
-% title('Block Detection V1 vs V2');
-
-
 
 figure;
 subplot(3,3,1);
