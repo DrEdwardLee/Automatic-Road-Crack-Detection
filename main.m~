@@ -52,7 +52,7 @@ final_im = sum_im_v + sum_im_h;
 
 sigma = 2;
 equalizada=histeq(final_im);
-smooth_im = imgaussfilt(final_im, 1.5);
+smooth_im = imgaussfilt(final_im, 2);
 
 figure;
 subplot(3,3,1);
@@ -89,7 +89,7 @@ subplot(3,3,8);
 imshow(bin_image2);
 title('Imagem Equalizada binarizada');
 
-bin_image3 = im2bw(smooth_im , 0.2);
+bin_image3 = im2bw(smooth_im , 0.);
 subplot(3,3,9);
 imshow(bin_image3);
 title('Imagem Original filtrada binarizada');
