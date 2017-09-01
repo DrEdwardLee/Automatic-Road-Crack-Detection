@@ -17,10 +17,6 @@ imshow(train_sum_im_t);
 title('Train image Saturated');
 
 %%
-trained_mean = mean2(train_sum_im_t);
-trained_std = std2(train_sum_im_t);
-
-%%
 [trained_mean, trained_std] = train_params(train_sum_im_t, thresh_level);  
 
 %% Processing the crack image
@@ -101,33 +97,37 @@ subplot(3,3,9);
 imshow(bin_image3);
 title('Imagem Original filtrada binarizada');
 %% Closing Operation
-ss = strel('square',5);
-d_bin_image = imdilate(bin_image3,ss);
-e_bin_image = imerode(d_bin_image,ss);
+ss = strel('disk',6);
+close_bin_image = imclose(bin_image3,ss);
 
 figure;
-imshow(d_bin_image);
+subplot(1,2,1);
+imshow(bin_image3);
+title('Closing operation');
+
+subplot(1,2,2);
+imshow(close_bin_image);
 title('Closing operation');
 %% Block Detect
-num_of_blocks = 40;
+num_of_blocks = 20;
 trained_mean = mean2(train_sum_im_t);
 trained_std = std2(train_sum_im_t);
 % Imagem original
 [ res1, mean_std_crack_block1, mean_mean_crack_block1, mean_std_no_crack_block1, mean_mean_no_crack_block1 ] = ...
-    block_detect( final_im, num_of_blocks, 0.3, 1);
+    block_detect( final_im, num_of_blocks, 3, 0.3, 1);
 
 [ res2, mean_std_crack_block2, mean_mean_crack_block2, mean_std_no_crack_block2, mean_mean_no_crack_block2 ] = ...
-    block_detectV2( final_im, num_of_blocks, trained_mean, 5);
+    block_detectV2( final_im, num_of_blocks, 3, trained_mean, 5, trained_std, 1);
 
 t_smooth_im = imfilter(train_sum_im_t,h,'replicate');
 s_trained_mean = mean2(t_smooth_im);
 s_trained_std = std2(t_smooth_im);
 % Imagem original blured
 [ res3, mean_std_crack_block3, mean_mean_crack_block3, mean_std_no_crack_block3, mean_mean_no_crack_block3 ] = ...
-    block_detect( smooth_im, num_of_blocks, 0.3, 1);
+    block_detect( smooth_im, num_of_blocks, 3, 0.3, 1);
 
 [ res4, mean_std_crack_block4, mean_mean_crack_block4, mean_std_no_crack_block4, mean_mean_no_crack_block4 ] = ...
-    block_detectV2( smooth_im, num_of_blocks, s_trained_mean, 5);
+    block_detectV2( smooth_im, num_of_blocks, s_trained_mean, 3, 5, trained_std, 1);
 
 figure;
 subplot(2,3,1);
@@ -151,7 +151,7 @@ imshow(res3);
 title('Block detect V1');
 
 subplot(2,3,6);
-imshow(res1);
+imshow(res4);
 title('Block detect V2');
 
 
