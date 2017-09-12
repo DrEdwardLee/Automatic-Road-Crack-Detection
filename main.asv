@@ -3,7 +3,7 @@ thresh_level = 40;
 %Mac or Windows
 % load('/Users/davidluisdiasfernandes/Documents/MATLAB/Samples/Cidade Universitária/Estrada1/Train/100cm__Decoded.mat');
 load('C:\Users\david\Desktop\Samples\Images\Cidade Universitária\Estrada1\Train\100cm__Decoded.mat');
-[train_central_im, train_sum_im_v, train_sum_im_h, train_sum_im_t] = sumAllApertures( LF , thresh_level);
+[train_central_im, train_sum_im_v, train_sum_im_h, train_sum_im_t] = sumAllApertures( LF , thresh_level, 10,1);
 t_central_im  = getCentralAperture( LF );
 
 %% Plot train image
@@ -21,10 +21,13 @@ title('Train image Saturated');
 
 %% Processing the crack image
 % load('/Users/davidluisdiasfernandes/Documents/MATLAB/Samples/Cidade Universitária/Estrada1/Imagem1/100cm__Decoded.mat');
-load('C:\Users\david\Desktop\Samples\Images\Cidade Universitária\Estrada1\Imagem4\100cm__Decoded.mat');
-[sat_central_im, sum_im_v, sum_im_h, sum_im_t] = sumAllApertures( LF , thresh_level );
+load('C:\Users\david\Desktop\Samples\Images\Cidade Universitária\Estrada1\Imagem2\100cm__Decoded.mat');
+[sat_central_im, sum_im_v, sum_im_h, sum_im_t] = sumAllApertures( LF , thresh_level,9,7);
 central_im  = getCentralAperture( LF );
 final_im = sum_im_v + sum_im_h;
+%% Plot the diff images results
+showDiffResults(LF, 256);
+
 %% Plot central image
 figure;
 subplot(1,2,1);
@@ -35,15 +38,14 @@ imshow(sat_central_im);
 title('Central Image');
 %% Plotting apertures
 figure;
-subplot(1,2,1);
+subplot(1,3,1);
 imshow(sum_im_v);
 title('Sum Vertical');
-subplot(1,2,2);
+subplot(1,3,2);
 imshow(sum_im_h);
 title('SUM Horizontal');
-%% Plot final image
-figure;
-imshow(final_im)
+subplot(1,3,3);
+imshow(final_im);
 title('SUM total');
 %% Use the sobel operator
 H = fspecial('sobel');
@@ -57,14 +59,14 @@ subplot(3,2,1)
 imshow(sum_im_h);
 title('Original sum im h');
 subplot(3,2,2)
-imshow(h_sobel_im);
-title('Sobel horizontal');
-subplot(3,2,3)
-imshow(sum_im_v);
-title('Original sum im h');
-subplot(3,2,4)
 imshow(v_sobel_im);
 title('Sobel vertical');
+subplot(3,2,3)
+imshow(sum_im_v);
+title('Original sum im v');
+subplot(3,2,4)
+imshow(h_sobel_im);
+title('Sobel horizontal');
 subplot(3,2,5)
 imshow(final_im);
 title('Original Final Im');
@@ -73,81 +75,40 @@ imshow(final_sobel_im);
 title('Sobel Final Im');
 
 %% Median 
-median_im = medfilt2(final_sobel_im, [5 5]);
+median_im = medfilt2(final_im, [5 5]);
+median_sobel_im = medfilt2(final_sobel_im, [5 5]);
+
 figure;
-subplot(1,2,1)
+subplot(2,2,1)
 imshow(final_sobel_im);
-title('Original Final Im');
-subplot(1,2,2);
+title('Sobel Im');
+subplot(2,2,2);
+imshow(median_sobel_im);
+title('Median of the Sobel Im');
+subplot(2,2,3)
+imshow(final_im);
+title(' Final Im without Sobel');
+subplot(2,2,4);
 imshow(median_im);
 title('Median Final Im');
 
 %% Histogram
-final_im = sum_im_v + sum_im_h;
-final_im = median_im;
-
-sigma = 2;
-equalizada=histeq(final_im);
-
-% Version r2013
-cutoff = ceil(3*sigma);
-h = fspecial('gaussian', 2*cutoff+1, sigma);
-smooth_im = imfilter(final_im,h,'replicate');
-
-% % Imgaussfit only works in Matlab >r2013
-% smooth_im = imgaussfilt(final_im, 1.5);
-
-figure;
-subplot(3,3,1);
-imshow(final_im);
-title('Imagem Original');
-
-subplot(3,3,2);
-imshow(equalizada);
-title('Imagem Equalizada');
-
-subplot(3,3,3);
-imshow(smooth_im);
-title('Imagem Original Alisada');
-
-subplot(3,3,4);
-imhist(final_im);
-title('Original');
-
-subplot(3,3,5);
-imhist(equalizada);
-title('Equalizada');
-
-subplot(3,3,6);
-imhist(smooth_im);
-title('Original Filtrada');
-
-bin_image1 = im2bw(final_im , 0.5);
-subplot(3,3,7);
-imshow(bin_image1);
-title('Imagem Original binarizada');
-
-bin_image2 = im2bw(equalizada , 0.99);
-subplot(3,3,8);
-imshow(bin_image2);
-title('Imagem Equalizada binarizada');
-
-bin_image3 = im2bw(smooth_im , 0.3);
-subplot(3,3,9);
-imshow(bin_image3);
-title('Imagem Original filtrada binarizada');
-%% Closing Operation
-ss = strel('disk',5);
-close_bin_image = imclose(bin_image3,ss);
+p_final_im_sobel = pixelAnalysis(median_sobel_im,2,0.5,0.99,0.2,1);
+p_final_im = pixelAnalysis(median_im,2,0.5,0.99,0.2,1);
 
 figure;
 subplot(1,2,1);
-imshow(bin_image3);
-title('Closing operation');
-
+imshow(p_final_im);
+title('Final Result without Sobel');
 subplot(1,2,2);
-imshow(close_bin_image);
-title('Closing operation');
+imshow(p_final_im_sobel);
+title('Final Result with sobel and Median');
+
+%% Canny
+BW1 = edge(final_im,'Sobel');
+figure;
+imshow(BW1);
+
 %% Block Detect (alterar a função block_detect para receber a dimensao em pixeis)
 num_of_blocks = 40;
 trained_mean = mean2(train_sum_im_t);
