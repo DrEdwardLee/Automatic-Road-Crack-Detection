@@ -3,10 +3,10 @@ function [ output_args ] = showDiffResults( LF , thresh_level)
 %   Detailed explanation goes here
 
 
-im = cell(1,20);
+im = cell(1,40);
 k=1;
 figure;
-for i=1:2:7
+for i=1:2:8
     for j = 1:2:10
     [sat_central_im, sum_im_v, sum_im_h, im{k}] = sumAllApertures( LF , thresh_level,j,i);
     subplot(4,5,k)
