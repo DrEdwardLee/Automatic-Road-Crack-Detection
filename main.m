@@ -1,8 +1,8 @@
 % Getting the train parameters
 thresh_level = 40;
 %Mac or Windows
-load('/Users/davidluisdiasfernandes/Documents/MATLAB/Samples/Cidade Universitária/Estrada1/Train/100cm__Decoded.mat');
-%load('C:\Users\david\Desktop\Samples\Images\Cidade Universitária\Estrada1\Train\100cm__Decoded.mat');
+%load('/Users/davidluisdiasfernandes/Documents/MATLAB/Samples/Cidade Universitária/Estrada1/Train/100cm__Decoded.mat');
+load('C:\Users\david\Desktop\Samples\Images\Cidade Universitária\Estrada1\Train\100cm__Decoded.mat');
 [train_central_im, train_sum_im_v, train_sum_im_h, train_sum_im_t] = sumAllApertures( LF , thresh_level, 10,1);
 t_central_im  = getCentralAperture( LF );
 
@@ -20,9 +20,9 @@ title('Train image Saturated');
 [trained_mean, trained_std] = train_params(train_sum_im_t, thresh_level);  
 
 %% Processing the crack image
-load('/Users/davidluisdiasfernandes/Documents/MATLAB/Samples/Cidade Universitária/Estrada1/Imagem1/100cm__Decoded.mat');
-%load('C:\Users\david\Desktop\Samples\Images\Cidade Universitária\Estrada1\Imagem2\100cm__Decoded.mat');
-[sat_central_im, sum_im_v, sum_im_h, sum_im_t] = sumAllApertures( LF , thresh_level,13,7);
+%load('/Users/davidluisdiasfernandes/Documents/MATLAB/Samples/Cidade Universitária/Estrada1/Imagem1/100cm__Decoded.mat');
+load('C:\Users\david\Desktop\Samples\Images\Cidade Universitária\Estrada1\Imagem1\100cm__Decoded.mat');
+[sat_central_im, sum_im_v, sum_im_h, sum_im_t] = sumAllApertures( LF , thresh_level,9,1);
 central_im  = getCentralAperture( LF );
 final_im = sum_im_v + sum_im_h;
 %% 2D Processing
@@ -30,6 +30,7 @@ twoD_processed_im = Processing2D(central_im, sat_central_im);
 
 %% Plot the diff images results
 showDiffResults(LF, 40);
+
 
 %% Plot central image
 figure;
