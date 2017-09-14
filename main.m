@@ -20,7 +20,8 @@ title('Train image Saturated');
 [trained_mean, trained_std] = train_params(train_sum_im_t, thresh_level);  
 
 %% Processing the crack image
-%load('/Users/davidluisdiasfernandes/Documents/MATLAB/Samples/Cidade Universitária/Estrada1/Imagem1/100cm__Decoded.mat');
+thresh_level = 40;
+% load('/Users/davidluisdiasfernandes/Documents/MATLAB/Samples/Cidade Universitária/Estrada1/Imagem1/100cm__Decoded.mat');
 load('C:\Users\david\Desktop\Samples\Images\Cidade Universitária\Estrada1\Imagem1\100cm__Decoded.mat');
 [sat_central_im, sum_im_v, sum_im_h, sum_im_t] = sumAllApertures( LF , thresh_level,9,1);
 central_im  = getCentralAperture( LF );

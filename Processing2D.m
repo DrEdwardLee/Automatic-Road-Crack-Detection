@@ -39,7 +39,7 @@ imshow(canny_im);
 title('Canny edge detector(saturated Im)');
 
 
-p_final_im = pixelAnalysis(median_im,2,0.5,0.99,0.2,1);
+p_final_im = pixelAnalysis(median_im,2,0.3,0.99,0.1,1);
 
 
 end
