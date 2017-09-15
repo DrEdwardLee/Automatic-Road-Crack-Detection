@@ -20,11 +20,14 @@ title('Train image Saturated');
 [trained_mean, trained_std] = train_params(train_sum_im_t, thresh_level);  
 
 %% Processing the crack image
-%load('/Users/davidluisdiasfernandes/Documents/MATLAB/Samples/Cidade Universitária/Estrada1/Imagem1/100cm__Decoded.mat');
-load('C:\Users\david\Desktop\Samples\Images\Cidade Universitária\Estrada2\Image1\100cm__Decoded.mat');
-[sat_central_im, sum_im_v, sum_im_h, sum_im_t] = sumAllApertures( LF , thresh_level,9,1);
+thresh_level = 40;
+% load('/Users/davidluisdiasfernandes/Documents/MATLAB/Samples/Cidade Universitária/Estrada1/Imagem1/100cm__Decoded.mat');
+load('C:\Users\david\Desktop\Samples\Images\Cidade Universitária\Estrada1\Imagem1\100cm__Decoded.mat');
+[sat_central_im, sum_im_v, sum_im_h, sum_im_t] = sumAllApertures( LF , thresh_level,9,3);
 central_im  = getCentralAperture( LF );
 final_im = sum_im_v + sum_im_h;
+%% Show sub apertures
+showSubApertures(LF);
 %% 2D Processing
 twoD_processed_im = Processing2D(central_im, sat_central_im);
 
@@ -97,8 +100,8 @@ imshow(median_im);
 title('Median Final Im');
 
 %% Histogram
-p_final_im_sobel = pixelAnalysis(median_sobel_im,2,0.5,0.99,0.2,1);
-p_final_im = pixelAnalysis(median_im,2,0.5,0.99,0.2,1);
+p_final_im_sobel = pixelAnalysis(median_sobel_im,3,0.25,0.99,0.25,1);
+p_final_im = pixelAnalysis(median_im,3,0.25,0.99,0.25,1);
 
 figure;
 subplot(1,2,1);

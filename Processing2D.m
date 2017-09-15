@@ -33,7 +33,7 @@ imshow(sat_final_sobel_im);
 title('Sobel with the saturated Im');
 subplot(3,2,5)
 imshow(median_im);
-title('Sobel with Sobel Im');
+title('Median filter on the Sobel Im');
 subplot(3,2,6)
 imshow(canny_im);
 title('Canny edge detector(saturated Im)');
