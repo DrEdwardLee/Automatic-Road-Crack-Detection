@@ -1,4 +1,4 @@
-function [ central_im, sum_im_v, sum_im_h, sum_im_t] = sumAllApertures( LF, thresh_level, num_apertures, edge_line )
+function [ central_im, sat_central_im, sum_im_v, sum_im_h, sum_im_t] = sumAllApertures( LF, thresh_level, num_apertures, edge_line )
 im_v = cell(1,num_apertures);
 im_h = cell(1,num_apertures);
 
@@ -25,6 +25,7 @@ end
 % sum_im_h = sum_im_h/num_apertures;
 
 sum_im_t = sum_im_v + sum_im_h;
-central_im = uint8(imThresh(rgb2gray(squeeze(LF(8,8,:,:,1:3)) / 256), thresh_level));
+sat_central_im = uint8(imThresh(rgb2gray(squeeze(LF(8,8,:,:,1:3)) / 256), thresh_level));
+central_im =squeeze(LF(8,8,:,:,1:3));
 end
 

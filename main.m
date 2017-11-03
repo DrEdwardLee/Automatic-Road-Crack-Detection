@@ -22,8 +22,8 @@ title('Train image Saturated');
 %% Processing the crack image
 thresh_level = 40;
 % load('/Users/davidluisdiasfernandes/Documents/MATLAB/Samples/Cidade Universitária/Estrada1/Imagem1/100cm__Decoded.mat');
-load('C:\Users\david\Desktop\Samples\Images\Cidade Universitária\Estrada1\Imagem2\100cm__Decoded.mat');
-[sat_central_im, sum_im_v, sum_im_h, sum_im_t] = sumAllApertures( LF , thresh_level,9,3);
+load('C:\Users\david\Desktop\Samples\Images\Cidade Universitária\Estrada1\Imagem4\100cm__Decoded.mat');
+[central_im,sat_central_im, sum_im_v, sum_im_h, sum_im_t] = sumAllApertures( LF , thresh_level,9,3);
 central_im  = getCentralAperture( LF );
 final_im = sum_im_v + sum_im_h;
 %% Show sub apertures
@@ -42,7 +42,7 @@ imshow(squeeze(LF(8,8,:,:,1:3)));
 title('Central Image');
 subplot(1,2,2);
 imshow(sat_central_im);
-title('Central Image');
+title('sat Central Image');
 %% Plotting apertures
 figure;
 subplot(1,3,1);

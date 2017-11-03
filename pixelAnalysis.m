@@ -65,6 +65,6 @@ if verbose
     title('Original filtrada binarizada');
 end
 
-final_res = bin_image3;
+final_res = bin_image1;
 end
 

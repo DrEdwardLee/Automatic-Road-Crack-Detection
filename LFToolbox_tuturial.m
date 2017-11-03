@@ -5,7 +5,7 @@ clear all;
 % Build a white image dataset
 LFUtilProcessWhiteImages;
 %% Decode the sample light fields
-LFUtilDecodeLytroFolder('/Users/davidluisdiasfernandes/Documents/MATLAB/Samples/Cidade Universitária');
+LFUtilDecodeLytroFolder('C:\Users\david\Desktop\Samples\Images\Cidade Universitária2');
 %% Same as the previous, but with color corretion enabled (Optional)
 DecodeOptions.OptionalTasks = 'ColourCorrect';
 LFUtilDecodeLytroFolder('/Users/davidluisdiasfernandes/Documents/MATLAB/Samples', [], DecodeOptions);
